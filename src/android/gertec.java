@@ -20,6 +20,7 @@ import br.com.gertec.gedi.interfaces.IGEDI;
 import br.com.gertec.gedi.interfaces.IPRNTR;
 import br.com.gertec.gedi.structs.GEDI_PRNTR_st_StringConfig;
 import br.com.gertec.gedi.GEDI;
+import java.lang.Exception;
 //import br.com.gertec.ppcomp.PPComp;
 
 /**
@@ -42,7 +43,12 @@ public class gertec extends CordovaPlugin {
             
             String texto = args.toString();
 
-            imprimirComprovante(texto);
+           try {
+                imprimirComprovante(texto);
+            } catch (Exception e) {
+                callbackContext.error(e.getMessage());
+                return false;
+            }
             callbackContext.success();
             return true;
         }
