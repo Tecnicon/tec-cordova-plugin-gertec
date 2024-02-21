@@ -17,6 +17,7 @@ import br.com.gertec.gedi.exceptions.GediException;
 import br.com.gertec.gedi.interfaces.IGEDI;
 import br.com.gertec.gedi.interfaces.IPRNTR;
 import br.com.gertec.gedi.structs.GEDI_PRNTR_st_StringConfig;
+import br.com.gertec.gedi.GEDI;
 //import br.com.gertec.ppcomp.PPComp;
 
 /**
@@ -41,7 +42,9 @@ public class gertec extends CordovaPlugin {
 
     private void imprimirComprovante(String texto) {
        // PPComp ppComp;
-        IGEDI mGedi;
+           IGEDI mGedi;
+           GEDI.init(gertec.this);
+           mGedi = GEDI.getInstance(gertec.this);
 
         new Thread(() -> {
             IPRNTR mPRNTR = mGedi.getPRNTR();
