@@ -12,12 +12,12 @@ import android.graphics.Typeface;
 import android.widget.Toast;
 
 
-/*import br.com.gertec.gedi.enums.GEDI_PRNTR_e_PrintDensity;
+import br.com.gertec.gedi.enums.GEDI_PRNTR_e_PrintDensity;
 import br.com.gertec.gedi.exceptions.GediException;
 import br.com.gertec.gedi.interfaces.IGEDI;
 import br.com.gertec.gedi.interfaces.IPRNTR;
 import br.com.gertec.gedi.structs.GEDI_PRNTR_st_StringConfig;
-import br.com.gertec.ppcomp.PPComp;*/
+//import br.com.gertec.ppcomp.PPComp;
 
 /**
  * This class echoes a string called from JavaScript.
@@ -28,10 +28,10 @@ public class gertec extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if ("imprimir".equals(action)) {
             
-           // String texto = args.toString();
+            String texto = args.toString();
 
-            //imprimirComprovante(texto);
-           // callbackContext.success();
+            imprimirComprovante(texto);
+            callbackContext.success();
             return true;
         }
 
@@ -39,8 +39,8 @@ public class gertec extends CordovaPlugin {
         return false;
     }
 
-    /*private void imprimirComprovante(String texto) {
-        PPComp ppComp;
+    private void imprimirComprovante(String texto) {
+       // PPComp ppComp;
         IGEDI mGedi;
 
         new Thread(() -> {
@@ -60,5 +60,5 @@ public class gertec extends CordovaPlugin {
              //   mostrarMensagem("Erro ao imprimir comprovante: " + e);
             }
         }).start();
-    }*/
+    }
 }
