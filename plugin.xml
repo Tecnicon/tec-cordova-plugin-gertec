@@ -13,5 +13,7 @@
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml"></config-file>
         <source-file src="src/android/gertec.java" target-dir="src/gertec" />
+        <lib-file src="src/android/libs/GediGPOS720.jar" />
+        <lib-file src="src/android/libs/PPCompGPOS720.jar" />
     </platform>
 </plugin>
