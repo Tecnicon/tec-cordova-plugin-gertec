@@ -10,7 +10,7 @@ import org.json.JSONException;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.widget.Toast;
-
+import android.content.Context;
 
 import br.com.gertec.gedi.enums.GEDI_PRNTR_e_PrintDensity;
 import br.com.gertec.gedi.exceptions.GediException;
