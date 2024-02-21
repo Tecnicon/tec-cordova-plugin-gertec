@@ -43,8 +43,8 @@ public class gertec extends CordovaPlugin {
     private void imprimirComprovante(String texto) {
        // PPComp ppComp;
            IGEDI mGedi;
-           GEDI.init(gertec.this);
-           mGedi = GEDI.getInstance(gertec.this);
+          // GEDI.init(gertec.this);
+          mGedi = GEDI.getInstance();
 
         new Thread(() -> {
             IPRNTR mPRNTR = mGedi.getPRNTR();
