@@ -2,6 +2,8 @@ package gertec;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.CordovaWebView;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -24,6 +26,15 @@ import br.com.gertec.gedi.GEDI;
  * This class echoes a string called from JavaScript.
  */
 public class gertec extends CordovaPlugin {
+
+
+ private Context context;
+
+    @Override
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        super.initialize(cordova, webView);
+        this.context = cordova.getActivity().getApplicationContext();
+    }
     
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -42,9 +53,9 @@ public class gertec extends CordovaPlugin {
 
     private void imprimirComprovante(String texto) {
        // PPComp ppComp;
-           IGEDI mGedi;
-          // GEDI.init(gertec.this);
-          mGedi = GEDI.getInstance();
+        IGEDI mGedi;
+        GEDI.init(context);
+        mGedi = GEDI.getInstance(context);
 
         new Thread(() -> {
             IPRNTR mPRNTR = mGedi.getPRNTR();
