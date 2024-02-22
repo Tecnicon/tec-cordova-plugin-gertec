@@ -91,7 +91,12 @@ public class gertec extends CordovaPlugin {
 
     
     private void inicializarPinPad() {
-        MainActivity iniciar = new MainActivity();    
+       cordovaInt.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MainActivity iniciar = (MainActivity) cordovaInt.getActivity();
+            }
+        });  
     }
     
     
