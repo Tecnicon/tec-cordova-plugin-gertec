@@ -9,11 +9,17 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.Toast;
-import android.content.Context;
-import android.app.Activity;
 
 import br.com.gertec.gedi.enums.GEDI_PRNTR_e_PrintDensity;
 import br.com.gertec.gedi.exceptions.GediException;
@@ -30,6 +36,7 @@ import br.com.gertec.ppcomp.exceptions.PPCompNotifyException;
 import br.com.gertec.ppcomp.exceptions.PPCompProcessingException;
 import br.com.gertec.ppcomp.exceptions.PPCompTabExpException;
 
+
 /**
  * This class echoes a string called from JavaScript.
  */
@@ -37,6 +44,11 @@ public class gertec extends CordovaPlugin {
 
     private Context context;
     private CordovaInterface cordovaInt;
+
+    IGEDI mGedi;
+    Button btnGCR;
+    Button btnGOC;
+    PPComp ppComp;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -49,7 +61,6 @@ public class gertec extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if ("imprimir".equals(action)) {
-
             String texto = args.toString();
 
             try {
@@ -60,38 +71,32 @@ public class gertec extends CordovaPlugin {
             }
             callbackContext.success();
             return true;
-        } else if ("inserir".equals(action)) {
+        } else if ("inicializarPinPad".equals(action)) {
 
             String texto = args.toString();
 
             try {
-                inserir();
+                inicializarPinPad();
             } catch (Exception e) {
                 callbackContext.error(e.getMessage());
                 return false;
             }
             callbackContext.success();
             return true;
-        } else if ("aproximar".equals(action)) {
-
-            String texto = args.toString();
-
-            try {
-                aproximar();
-            } catch (Exception e) {
-                callbackContext.error(e.getMessage());
-                return false;
-            }
-            callbackContext.success();
-            return true;
-        }
+        } 
 
         callbackContext.error(action + " is not a supported action");
         return false;
     }
 
+    
+    private void inicializarPinPad() {
+        MainActivity iniciar = new MainActivity();    
+    }
+    
+    
     private void imprimirComprovante(String texto) {
-        IGEDI mGedi;
+
         GEDI.init(context);
         mGedi = GEDI.getInstance(context);
 
@@ -112,77 +117,6 @@ public class gertec extends CordovaPlugin {
                 mostrarMensagem("Erro ao imprimir comprovante: " + e);
             }
         }).start();
-    }
-
-    private void inserir() {
-
-        PPComp ppComp = new PPComp(context);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //Parametros de entrada do GetCard
-                String gcr_input = "0001000000001000691231210457012345678900";
-                String output = "";
-                StringBuffer msgNotify = new StringBuffer();
-
-                try {
-                    ppComp.PP_StartGetCard(gcr_input);
-                    while (true) {
-                        try {
-                            mostrarMensagem("Insira o cartão...");
-                            output = ppComp.PP_GetCard();
-                            mostrarMensagem("Resultado = " + output);
-                            break;
-                        } catch (PPCompProcessingException e) {
-                        } catch (PPCompNotifyException e) {
-                        } catch (PPCompTabExpException e) {
-                            ppComp.PP_ResumeGetCard();
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
-    private void aproximar() {
-        PPComp ppComp = new PPComp(context);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //Parametros de entrada do GoOnChip
-                String goc_input = "000000001000000000000000001101000000000000000000000000000000001000003E820000003E880000";
-                String goc_inputTags = "0019B";
-                String goc_inputTagsOpt = "0119F0B1F813A9F6B9F6C9F66";
-                String output = "";
-                try {
-                    ppComp.PP_StartGoOnChip(goc_input, goc_inputTags, goc_inputTagsOpt);
-                    while (true) {
-                        try {
-                            output = ppComp.PP_GoOnChip();
-                            mostrarMensagem("Resultado = " + output);
-                            cordovaInt.getActivity().finish();
-                         
-                            //  PinKBDActivity.getKBDData().activity.finish();
-                            //     imprimirComprovante(output);
-                            break;
-                        } catch (PPCompProcessingException e) {
-                        } catch (PPCompNotifyException e) {
-                        }
-                    }
-                } catch (Exception e) {
-
-                    mostrarMensagem("Erro no GOC" + e);
-                    cordovaInt.getActivity().finish();
-                 
-                    //  PinKBDActivity.getKBDData().activity.finish();
-                }
-            }
-        }).start();
-
     }
 
     private void mostrarMensagem(String texto) {
