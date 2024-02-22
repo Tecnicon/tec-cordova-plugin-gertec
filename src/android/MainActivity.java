@@ -1,4 +1,4 @@
-package gertec;
+package android;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -97,8 +97,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        //aproximar
         btnGOC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
