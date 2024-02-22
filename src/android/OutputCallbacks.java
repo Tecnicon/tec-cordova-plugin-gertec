@@ -1,4 +1,4 @@
-package gertec;
+package android;
 
 import android.content.Context;
 import android.content.Intent;
