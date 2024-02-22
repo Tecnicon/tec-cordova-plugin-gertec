@@ -13,6 +13,10 @@
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml"></config-file>
         <source-file src="src/android/gertec.java" target-dir="src/gertec" />
+        <source-file src="src/android/PinKBDActivity.java" target-dir="src/PinKBDActivity" />
+        <source-file src="src/android/OutputCallbacks.java" target-dir="src/OutputCallbacks" />
+        <source-file src="src/android/KBDData.java" target-dir="src/KBDData" />
+        <source-file src="src/android/MainActivity.java" target-dir="src/MainActivity" />
         <lib-file src="src/libs/GediGPOS720.jar" />
         <lib-file src="src/libs/PPCompGPOS720.jar" />
     </platform>
