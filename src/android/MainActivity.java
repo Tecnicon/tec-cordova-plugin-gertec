@@ -1,4 +1,4 @@
-package br.com.gertec.exemplogcr_goc;
+package gertec;
 
 import androidx.appcompat.app.AppCompatActivity;
 
