@@ -44,12 +44,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-         final View rootView = getWindow().getDecorView().getRootView();
-        
-     
-        btnGCR = (Button) rootView.findViewById(Integer.parseInt("0x7f08006b", 16));
-        btnGOC = (Button) rootView.findViewById(Integer.parseInt("0x7f08006c", 16));
+        btnGCR = (Button) findViewById(R.id.buttonGCR);
+        btnGOC = (Button) findViewById(R.id.buttonGOC);
 
+        
         new Thread(new Runnable() {
             @Override
             public void run() {
