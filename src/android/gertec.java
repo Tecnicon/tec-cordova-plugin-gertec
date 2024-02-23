@@ -83,7 +83,7 @@ public class gertec extends CordovaPlugin {
                 callbackContext.error(e.getMessage());
                 return false;
             }
-            callbackContext.success();
+            callbackContext.success("Ok..");
             return true;
         } 
 
