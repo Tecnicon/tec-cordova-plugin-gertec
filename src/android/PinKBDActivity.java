@@ -17,7 +17,7 @@ public class PinKBDActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "onCreate: start");
+          Log.i(TAG, "onCreate: start");
         super.onCreate(savedInstanceState);
         setFinishOnTouchOutside(false);
 
@@ -31,9 +31,8 @@ public class PinKBDActivity extends Activity {
 
         frameLayout_pin.addView(child);
         mKBDData = new KBDData();
-
-        //         mKBDData.btn0 = rootView.findViewWithTag(getString(R.string.btn0Tag));
-        /*    mKBDData.btn1 = rootView.findViewWithTag(getString(R.string.btn1Tag));;
+        mKBDData.btn0 = rootView.findViewWithTag(getString(R.string.btn0Tag));
+        mKBDData.btn1 = rootView.findViewWithTag(getString(R.string.btn1Tag));
         mKBDData.btn2 = rootView.findViewWithTag(getString(R.string.btn2Tag));
         mKBDData.btn3 = rootView.findViewWithTag(getString(R.string.btn3Tag));
         mKBDData.btn4 = rootView.findViewWithTag(getString(R.string.btn4Tag));
@@ -45,9 +44,9 @@ public class PinKBDActivity extends Activity {
         mKBDData.btnCancel = rootView.findViewWithTag(getString(R.string.btnCancelTag));
         mKBDData.btnClear = rootView.findViewWithTag(getString(R.string.btnClearTag));
         mKBDData.btnConfirm = rootView.findViewWithTag(getString(R.string.btnEnterTag));
-        mKBDData.textView = rootView.findViewWithTag(getString(R.string.lblDigitsTag));*/
+        mKBDData.textView = rootView.findViewWithTag(getString(R.string.lblDigitsTag));
         
-        mKBDData.btn0 = rootView.findViewWithTag("btn0Tag");
+        /*mKBDData.btn0 = rootView.findViewWithTag("btn0Tag");
         mKBDData.btn1 = rootView.findViewWithTag("btn1Tag");
         mKBDData.btn2 = rootView.findViewWithTag("btn2Tag");
         mKBDData.btn3 = rootView.findViewWithTag("btn3Tag");
@@ -60,7 +59,7 @@ public class PinKBDActivity extends Activity {
         mKBDData.btnCancel = rootView.findViewWithTag("btnCancelTag");
         mKBDData.btnClear = rootView.findViewWithTag("btnClearTag");
         mKBDData.btnConfirm = rootView.findViewWithTag("btnEnterTag");
-        mKBDData.textView = rootView.findViewWithTag("lblDigitsTag");
+        mKBDData.textView = rootView.findViewWithTag("lblDigitsTag");*/
 
         mKBDData.activity = PinKBDActivity.this;
 
