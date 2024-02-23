@@ -104,7 +104,7 @@ public class gertec extends CordovaPlugin {
 
         PPComp ppComp = new PPComp(context);
         ppComp.PP_Open();
-        ppComp.PP_SetDspCallbacks(context);
+     //   ppComp.PP_SetDspCallbacks(context);
 
         new Thread(new Runnable() {
             @Override
@@ -143,7 +143,7 @@ public class gertec extends CordovaPlugin {
 
         PPComp ppComp = new PPComp(context);
         ppComp.PP_Open();
-        ppComp.PP_SetDspCallbacks(context);
+     //   ppComp.PP_SetDspCallbacks(context);
 
         new Thread(new Runnable() {
             @Override
