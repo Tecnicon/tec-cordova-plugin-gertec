@@ -38,6 +38,7 @@ import br.com.gertec.ppcomp.exceptions.PPCompNotifyException;
 import br.com.gertec.ppcomp.exceptions.PPCompProcessingException;
 import br.com.gertec.ppcomp.exceptions.PPCompTabExpException;
 
+
 /**
  * This class echoes a string called from JavaScript.
  */
@@ -47,6 +48,8 @@ public class gertec extends CordovaPlugin {
     private CordovaInterface cordovaInt;
 
     IGEDI mGedi;
+    Button btnGCR;
+    Button btnGOC;
     PPComp ppComp;
 
     @Override
@@ -70,110 +73,35 @@ public class gertec extends CordovaPlugin {
             }
             callbackContext.success();
             return true;
-        } else if ("inserir".equals(action)) {
+        } else if ("inicializarPinPad".equals(action)) {
 
             String texto = args.toString();
 
             try {
-                inserir();
+                inicializarPinPad();
             } catch (Exception e) {
                 callbackContext.error(e.getMessage());
                 return false;
             }
             callbackContext.success();
             return true;
-        } else if ("aproximar".equals(action)) {
-
-            String texto = args.toString();
-
-            try {
-                aproximar();
-            } catch (Exception e) {
-                callbackContext.error(e.getMessage());
-                return false;
-            }
-            callbackContext.success();
-            return true;
-        }
+        } 
 
         callbackContext.error(action + " is not a supported action");
         return false;
     }
 
-    private void aproximar() throws PPCompException {
-
-        PPComp ppComp = new PPComp(context);
-        ppComp.PP_Open();
-     //   ppComp.PP_SetDspCallbacks(context);
-
-        new Thread(new Runnable() {
+    
+    private void inicializarPinPad() {
+       cordovaInt.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                //Parametros de entrada do GoOnChip
-                String goc_input = "000000001000000000000000001101000000000000000000000000000000001000003E820000003E880000";
-                String goc_inputTags = "0019B";
-                String goc_inputTagsOpt = "0119F0B1F813A9F6B9F6C9F66";
-                String output = "";
-                try {
-                    ppComp.PP_StartGoOnChip(goc_input, goc_inputTags, goc_inputTagsOpt);
-                    while (true) {
-                        try {
-                            output = ppComp.PP_GoOnChip();
-                            mostrarMensagem("Resultado = " + output);
-                            cordovaInt.getActivity().finish();
-
-                            //     imprimirComprovante(output);
-                            break;
-                        } catch (PPCompProcessingException e) {
-                        } catch (PPCompNotifyException e) {
-                        }
-                    }
-                } catch (Exception e) {
-
-                    mostrarMensagem("Erro no GOC" + e);
-                    cordovaInt.getActivity().finish();
-
-                }
+                MainActivity iniciar = (MainActivity) cordovaInt.getActivity();
             }
-        }).start();
-
+        });  
     }
-
-    private void inserir() throws PPCompException {
-
-        PPComp ppComp = new PPComp(context);
-        ppComp.PP_Open();
-     //   ppComp.PP_SetDspCallbacks(context);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //Parametros de entrada do GetCard
-                String gcr_input = "0001000000001000691231210457012345678900";
-                String output = "";
-                StringBuffer msgNotify = new StringBuffer();
-
-                try {
-                    ppComp.PP_StartGetCard(gcr_input);
-                    while (true) {
-                        try {
-                            mostrarMensagem("Insira o cartão...");
-                            output = ppComp.PP_GetCard();
-                            mostrarMensagem("Resultado = " + output);
-                            break;
-                        } catch (PPCompProcessingException e) {
-                        } catch (PPCompNotifyException e) {
-                        } catch (PPCompTabExpException e) {
-                            ppComp.PP_ResumeGetCard();
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
+    
+    
     private void imprimirComprovante(String texto) {
 
         GEDI.init(context);

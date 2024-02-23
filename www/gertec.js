@@ -7,14 +7,9 @@ gertec.imprimir = function (text, onSuccess, onFail) {
 	cordova.exec(onSuccess, onFail, "gertec", "imprimir", [text]);
 };
 
-gertec.inserir = function (text, onSuccess, onFail) {
+gertec.inicializarPinPad = function (text, onSuccess, onFail) {
     if (typeof text === "undefined" || text === null) text = "";
-	cordova.exec(onSuccess, onFail, "gertec", "inserir", [text]);
-};
-
-gertec.aproximar = function (text, onSuccess, onFail) {
-    if (typeof text === "undefined" || text === null) text = "";
-	cordova.exec(onSuccess, onFail, "gertec", "aproximar", [text]);
+	cordova.exec(onSuccess, onFail, "gertec", "inicializarPinPad", [text]);
 };
 
 
