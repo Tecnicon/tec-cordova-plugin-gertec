@@ -31,6 +31,7 @@ public class PinKBDActivity extends Activity {
     public static final int btnClearTag = 2131623975;
     public static final int btnEnterTag = 2131623976;
     public static final int lblDigitsTag = 2131623993;
+    public static final int activity_manta = 2131427357;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class PinKBDActivity extends Activity {
         super.onCreate(savedInstanceState);
         setFinishOnTouchOutside(false);
 
-        setContentView(R.layout.activity_manta);
+        setContentView(activity_manta);
         final View rootView = getWindow().getDecorView().getRootView();
 
         FrameLayout frameLayout_pin = findViewById(frameMantaLayout_pin);
