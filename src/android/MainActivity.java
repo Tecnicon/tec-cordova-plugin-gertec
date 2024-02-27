@@ -1,4 +1,4 @@
-package br.com.gertec.exemplogcr_goc;
+package android;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,7 +15,6 @@ import br.com.gertec.ppcomp.exceptions.PPCompNotifyException;
 import br.com.gertec.ppcomp.exceptions.PPCompProcessingException;
 import br.com.gertec.ppcomp.exceptions.PPCompTabExpException;
 
-
 import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -29,6 +28,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
     IGEDI mGedi;
     Button btnGCR;
     Button btnGOC;
@@ -39,15 +39,18 @@ public class MainActivity extends AppCompatActivity {
     String timeStamp = "0123456789"; //Timestamp
     String quantidadeRegistros = "01"; //Quantidade de registros que será enviado no PP_TableLoadRec
 
+    public static final int buttonGCR = 2131230827;
+    public static final int buttonGOC = 2131230828;
+    public static final int activity_main = 2131427356;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        
-        btnGCR = (Button) findViewById(R.id.buttonGCR);
-        btnGOC = (Button) findViewById(R.id.buttonGOC);
+        setContentView(activity_main);
 
-        
+        btnGCR = (Button) findViewById(buttonGCR);
+        btnGOC = (Button) findViewById(buttonGOC);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -100,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         //aproximar
         btnGOC.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                                     output = ppComp.PP_GoOnChip();
                                     mostraMensagem("Resultado = " + output);
                                     PinKBDActivity.getKBDData().activity.finish();
-                                  //  imprimirComprovante();
+                                    //  imprimirComprovante();
                                     break;
                                 } catch (PPCompProcessingException e) {
                                 } catch (PPCompNotifyException e) {
@@ -144,34 +146,33 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public void imprimirComprovante(){
- String comprovante = "teste";
+
+    public void imprimirComprovante() {
+        String comprovante = "teste";
         new Thread(new Runnable() {
             @Override
             public void run() {
                 IPRNTR mPRNTR = mGedi.getPRNTR();
                 GEDI_PRNTR_st_StringConfig strconfig = new GEDI_PRNTR_st_StringConfig(new Paint());
 
-      
-                    try {
-                        mPRNTR.Init();
-                        strconfig.paint.setTypeface(Typeface.MONOSPACE);
-                        strconfig.paint.setTextSize(16);
-                        mPRNTR.SetPrintDensity(GEDI_PRNTR_e_PrintDensity.HIGH);
-                        mPRNTR.DrawStringExt(strconfig, comprovante);
-                        mPRNTR.Output();
-                        mostraMensagem("Comprovante impresso");
-                    } catch (GediException e) {
-                        e.printStackTrace();
-                        mostraMensagem("Erro ao imprimir comprovante: " +e);
-                    }
-                 
+                try {
+                    mPRNTR.Init();
+                    strconfig.paint.setTypeface(Typeface.MONOSPACE);
+                    strconfig.paint.setTextSize(16);
+                    mPRNTR.SetPrintDensity(GEDI_PRNTR_e_PrintDensity.HIGH);
+                    mPRNTR.DrawStringExt(strconfig, comprovante);
+                    mPRNTR.Output();
+                    mostraMensagem("Comprovante impresso");
+                } catch (GediException e) {
+                    e.printStackTrace();
+                    mostraMensagem("Erro ao imprimir comprovante: " + e);
+                }
 
             }
         }).start();
     }
 
-    public String getProductName(){
+    public String getProductName() {
         String productName = null;
         try {
             productName = mGedi.getINFO().ProductNameGet();
