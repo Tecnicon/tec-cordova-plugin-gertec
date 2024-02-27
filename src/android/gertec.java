@@ -86,13 +86,26 @@ public class gertec extends CordovaPlugin {
             callbackContext.success("Ok..");
             return true;
         } 
+        else if ("mostrarMensagem".equals(action)) {
+
+            String texto = args.toString();
+
+            try {
+                mostrarMensagem(texto);
+            } catch (Exception e) {
+                callbackContext.error(e.getMessage());
+                return false;
+            }
+            callbackContext.success("Ok....");
+            return true;
+        } 
 
         callbackContext.error(action + " is not a supported action");
         return false;
     }
 
     
-    private void inicializarPinPad() {
+    private void inicializarPinPad() throws PPCompException {
        cordovaInt.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -102,7 +115,7 @@ public class gertec extends CordovaPlugin {
     }
     
     
-    private void imprimirComprovante(String texto) {
+    private void imprimirComprovante(String texto) throws PPCompException {
 
         GEDI.init(context);
         mGedi = GEDI.getInstance(context);
@@ -126,7 +139,7 @@ public class gertec extends CordovaPlugin {
         }).start();
     }
 
-    private void mostrarMensagem(String texto) {
+    private void mostrarMensagem(String texto) throws PPCompException {
         cordovaInt.getActivity().runOnUiThread(
                 new Runnable() {
             public void run() {
