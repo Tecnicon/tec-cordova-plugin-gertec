@@ -1,4 +1,4 @@
-package br.com.gertec.exemplogcr_goc;
+package android;
 
 import android.app.Activity;
 import android.widget.Button;
