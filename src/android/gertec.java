@@ -1,4 +1,4 @@
-package br.com.gertec.exemplogcr_goc;
+package android;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
