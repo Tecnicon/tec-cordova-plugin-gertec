@@ -1,4 +1,4 @@
-package br.com.gertec.exemplogcr_goc;
+package android;
 
 import android.content.Context;
 import android.content.Intent;
