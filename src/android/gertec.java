@@ -71,7 +71,7 @@ public class gertec extends CordovaPlugin {
                 callbackContext.error(e.getMessage());
                 return false;
             }
-            callbackContext.success(Ok...);
+            callbackContext.success("Ok...");
             return true;
         } else if ("inicializarPinPad".equals(action)) {
 
