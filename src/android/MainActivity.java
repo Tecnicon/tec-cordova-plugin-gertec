@@ -1,4 +1,4 @@
-package android;
+package gertec;
 
 import androidx.appcompat.app.AppCompatActivity;
 
