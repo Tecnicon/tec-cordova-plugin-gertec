@@ -44,9 +44,11 @@ public class MainActivity extends AppCompatActivity {
     public static final int activity_main = 2131427356;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) throws Exception {
 
-        mostraMensagem("instanciou");
+           if(true){
+           throw new Exception("teste");
+       }
         super.onCreate(savedInstanceState);
         setContentView(activity_main);
 
