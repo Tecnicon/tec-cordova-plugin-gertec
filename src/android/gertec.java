@@ -79,7 +79,7 @@ public class gertec extends CordovaPlugin {
 
             try {
                 inicializarPinPad();
-            } catch (Throwable e) {
+            } catch (Exception e) {
                 callbackContext.error("erro:" + retornoPinPad + "::" + e.getMessage());
                 return false;
             }
@@ -106,25 +106,27 @@ public class gertec extends CordovaPlugin {
     private void inicializarPinPad() throws PPCompException {
         retornoPinPad = "Ini";
         try {
+             // retornoPinPad += "inicioutry";
             cordovaInt.getActivity().runOnUiThread(new Runnable() {
-                @Override
+                //@Override
                 public void run() {
                     try {
-                        retornoPinPad += "iniciou";
+                          retornoPinPad += "iniciou";
+                          
                         MainActivity iniciar = (MainActivity) cordovaInt.getActivity();
-                        retornoPinPad += "iniciou sucesso";
+                           retornoPinPad += "iniciou sucesso";
                     } catch (Exception e) {
                         retornoPinPad += "2--";
                         retornoPinPad += e.getMessage();
-          
                     }
 
                 }
             });
         } catch (Exception e) {
-            retornoPinPad += "1--";
+            retornoPinPad += "1";
             throw e;
         }
+         retornoPinPad += "Fim";
     }
 
     private void imprimirComprovante(String texto) throws PPCompException {
@@ -152,8 +154,7 @@ public class gertec extends CordovaPlugin {
     }
 
     private void mostrarMensagem(String texto) {
-        cordovaInt.getActivity().runOnUiThread(
-                new Runnable() {
+        cordovaInt.getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 Toast.makeText(context, texto, Toast.LENGTH_LONG).show();
             }
