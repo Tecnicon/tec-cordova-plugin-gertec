@@ -78,7 +78,7 @@ public class gertec extends CordovaPlugin {
             String texto = args.toString();
 
             try {
-                inicializarPinPad();
+                inicializarPinPad(callbackContext);
             } catch (Throwable e) {
                 callbackContext.error(retornoPinPad + "::" + e.getMessage());
                 return false;
@@ -103,7 +103,7 @@ public class gertec extends CordovaPlugin {
         return false;
     }
 
-    private void inicializarPinPad() throws PPCompException {
+    private void inicializarPinPad(CallbackContext callbackContext) throws PPCompException {
         try {
             cordovaInt.getActivity().runOnUiThread(new Runnable() {
                 @Override
@@ -111,8 +111,8 @@ public class gertec extends CordovaPlugin {
                     try {
                         MainActivity iniciar = (MainActivity) cordovaInt.getActivity();
                     } catch (Exception e) {
+                        callbackContext.error("dentro:" + e.getMessage());
                         retornoPinPad += 2;
-                        throw e;
                     }
 
                 }
