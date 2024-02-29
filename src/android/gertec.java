@@ -22,6 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 import android.content.Context;
 import android.app.Activity;
+import java.util.concurrent.CountDownLatch;
 
 import br.com.gertec.gedi.enums.GEDI_PRNTR_e_PrintDensity;
 import br.com.gertec.gedi.exceptions.GediException;
@@ -80,7 +81,7 @@ public class gertec extends CordovaPlugin {
             try {
                 inicializarPinPad();
             } catch (Exception e) {
-                callbackContext.error("erro:" + retornoPinPad + "::" + e.getMessage());
+                callbackContext.error(e.getMessage());
                 return false;
             }
             callbackContext.success("sucesso:" + retornoPinPad);
@@ -103,44 +104,45 @@ public class gertec extends CordovaPlugin {
         return false;
     }
 
-    private void inicializarPinPad() throws PPCompException {
+    private void inicializarPinPad() throws PPCompException, InterruptedException {
         retornoPinPad = "Ini";
 
+        CountDownLatch latch = new CountDownLatch(1);
+
         new Thread(() -> {
-          mostrarMensagem("Testeentrou!!!!!!!");
-            retornoPinPad += "IniThRe";
+            mostrarMensagem("entrou");
             try {
                 cordovaInt.getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
                         try {
-                                   mostrarMensagem("Testeentrou2222!!!!!!!");
-                            retornoPinPad += "iniciou";
+                            mostrarMensagem("entrou2");
                             MainActivity iniciar = (MainActivity) cordovaInt.getActivity();
-                            retornoPinPad += "iniciou sucesso";
-                            onUiThreadCompleted();
-                        } catch (Exception e) {
-                                        mostrarMensagem("Testeentrou33333!!!!!!!");
-                            retornoPinPad += "2--";
-                            retornoPinPad += e.getMessage();
-                            onUiThreadCompleted();
-                        }
+                            mostrarMensagem("entrou3");
 
+                        } catch (Exception e) {
+
+                            mostrarMensagem("entrou4");
+                            mostrarMensagem("entrou4" + e.getMessage());
+                            retornoPinPad += e.getMessage();
+
+                        } finally {
+                            latch.countDown();
+                        }
                     }
                 });
             } catch (Exception e) {
-                retornoPinPad += "1";
                 throw e;
             }
         }).start();
 
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         retornoPinPad += "Fim";
-    }
-
-    private void onUiThreadCompleted() {
-
-        retornoPinPad += "FimDaTHread";
     }
 
     private void imprimirComprovante(String texto) throws PPCompException {
