@@ -63,7 +63,7 @@ public class gertec extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if ("imprimir".equals(action)) {
-            String texto = args.toString();
+          String texto = args.getString(0);
 
             try {
                 imprimirComprovante(texto);
@@ -75,7 +75,7 @@ public class gertec extends CordovaPlugin {
             return true;
         } else if ("inicializarPinPad".equals(action)) {
 
-            String texto = args.toString();
+           String texto = args.getString(0);
 
             try {
                 inicializarPinPad();
@@ -87,7 +87,7 @@ public class gertec extends CordovaPlugin {
             return true;
         } else if ("mostrarMensagem".equals(action)) {
 
-            String texto = args.toString();
+            String texto = args.getString(0);
 
             try {
                 mostrarMensagem(texto);
