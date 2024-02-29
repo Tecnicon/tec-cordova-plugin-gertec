@@ -63,7 +63,7 @@ public class gertec extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if ("imprimir".equals(action)) {
-          String texto = args.getString(0);
+            String texto = args.getString(0);
 
             try {
                 imprimirComprovante(texto);
@@ -75,7 +75,7 @@ public class gertec extends CordovaPlugin {
             return true;
         } else if ("inicializarPinPad".equals(action)) {
 
-           String texto = args.getString(0);
+            String texto = args.toString();
 
             try {
                 inicializarPinPad();
@@ -87,7 +87,7 @@ public class gertec extends CordovaPlugin {
             return true;
         } else if ("mostrarMensagem".equals(action)) {
 
-            String texto = args.getString(0);
+            String texto = args.toString();
 
             try {
                 mostrarMensagem(texto);
@@ -103,28 +103,27 @@ public class gertec extends CordovaPlugin {
         return false;
     }
 
-  private void inicializarPinPad() throws PPCompException {
+    private void inicializarPinPad() throws PPCompException {
         retornoPinPad = "Ini";
 
         new Thread(() -> {
+          mostrarMensagem("Testeentrou!!!!!!!");
             retornoPinPad += "IniThRe";
             try {
                 cordovaInt.getActivity().runOnUiThread(new Runnable() {
-
                     @Override
                     public void run() {
 
                         try {
+                                   mostrarMensagem("Testeentrou2222!!!!!!!");
                             retornoPinPad += "iniciou";
-
                             MainActivity iniciar = (MainActivity) cordovaInt.getActivity();
                             retornoPinPad += "iniciou sucesso";
-
                             onUiThreadCompleted();
                         } catch (Exception e) {
+                                        mostrarMensagem("Testeentrou33333!!!!!!!");
                             retornoPinPad += "2--";
                             retornoPinPad += e.getMessage();
-
                             onUiThreadCompleted();
                         }
 
