@@ -139,7 +139,7 @@ public class gertec extends CordovaPlugin {
         }).start();
     }
 
-    private void mostrarMensagem(String texto) throws PPCompException {
+    private void mostrarMensagem(String texto) {
         cordovaInt.getActivity().runOnUiThread(
                 new Runnable() {
             public void run() {
