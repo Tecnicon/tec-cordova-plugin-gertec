@@ -112,6 +112,7 @@ public class gertec extends CordovaPlugin {
                     try {
                         retornoPinPad += "iniciou";
                         MainActivity iniciar = (MainActivity) cordovaInt.getActivity();
+                        retornoPinPad += "iniciou sucesso";
                     } catch (Exception e) {
                         retornoPinPad += "2--";
                         retornoPinPad += e.getMessage();
