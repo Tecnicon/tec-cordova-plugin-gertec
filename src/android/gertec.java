@@ -104,13 +104,13 @@ public class gertec extends CordovaPlugin {
     }
 
     private void inicializarPinPad() throws PPCompException {
-        retornoPinPad = "";
         retornoPinPad = "Ini";
         try {
             cordovaInt.getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     try {
+                        retornoPinPad += "iniciou";
                         MainActivity iniciar = (MainActivity) cordovaInt.getActivity();
                     } catch (Exception e) {
                         retornoPinPad += "2--";
