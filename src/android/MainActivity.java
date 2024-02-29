@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        mostraMensagem("instanciou");
         super.onCreate(savedInstanceState);
         setContentView(activity_main);
 
