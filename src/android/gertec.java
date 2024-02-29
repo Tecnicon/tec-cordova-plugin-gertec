@@ -38,7 +38,6 @@ import br.com.gertec.ppcomp.exceptions.PPCompNotifyException;
 import br.com.gertec.ppcomp.exceptions.PPCompProcessingException;
 import br.com.gertec.ppcomp.exceptions.PPCompTabExpException;
 
-
 /**
  * This class echoes a string called from JavaScript.
  */
@@ -51,6 +50,7 @@ public class gertec extends CordovaPlugin {
     Button btnGCR;
     Button btnGOC;
     PPComp ppComp;
+    String retornoPinPad = "";
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -80,13 +80,12 @@ public class gertec extends CordovaPlugin {
             try {
                 inicializarPinPad();
             } catch (Exception e) {
-                callbackContext.error(e.getMessage());
+                callbackContext.error(retornoPinPad + "::" + e.getMessage());
                 return false;
             }
-            callbackContext.success("Ok..");
+            callbackContext.success("Ok.." + retornoPinPad);
             return true;
-        } 
-        else if ("mostrarMensagem".equals(action)) {
+        } else if ("mostrarMensagem".equals(action)) {
 
             String texto = args.toString();
 
@@ -98,23 +97,32 @@ public class gertec extends CordovaPlugin {
             }
             callbackContext.success("Ok....");
             return true;
-        } 
+        }
 
         callbackContext.error(action + " is not a supported action");
         return false;
     }
 
-    
     private void inicializarPinPad() throws PPCompException {
-       cordovaInt.getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                MainActivity iniciar = (MainActivity) cordovaInt.getActivity();
-            }
-        });  
+        try {
+            cordovaInt.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        MainActivity iniciar = (MainActivity) cordovaInt.getActivity();
+                    } catch (Exception e) {
+                        retornoPinPad += 2;
+                        throw e;
+                    }
+
+                }
+            });
+        } catch (Exception e) {
+            retornoPinPad += 1;
+            throw e;
+        }
     }
-    
-    
+
     private void imprimirComprovante(String texto) throws PPCompException {
 
         GEDI.init(context);
