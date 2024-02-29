@@ -83,6 +83,10 @@ public class gertec extends CordovaPlugin {
                 callbackContext.error(retornoPinPad + "::" + e.getMessage());
                 return false;
             }
+            if ("2".equals(retornoPinPad)) {
+                return false;
+            }
+
             callbackContext.success("Ok.." + retornoPinPad);
             return true;
         } else if ("mostrarMensagem".equals(action)) {
@@ -112,13 +116,13 @@ public class gertec extends CordovaPlugin {
                         MainActivity iniciar = (MainActivity) cordovaInt.getActivity();
                     } catch (Exception e) {
                         callbackContext.error("dentro:" + e.getMessage());
-                        retornoPinPad += 2;
+                        retornoPinPad = "2";
                     }
 
                 }
             });
         } catch (Exception e) {
-            retornoPinPad += 1;
+            retornoPinPad = "1";
             throw e;
         }
     }
