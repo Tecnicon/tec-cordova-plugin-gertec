@@ -103,30 +103,45 @@ public class gertec extends CordovaPlugin {
         return false;
     }
 
-    private void inicializarPinPad() throws PPCompException {
+  private void inicializarPinPad() throws PPCompException {
         retornoPinPad = "Ini";
-        try {
-             // retornoPinPad += "inicioutry";
-            cordovaInt.getActivity().runOnUiThread(new Runnable() {
-                //@Override
-                public void run() {
-                    try {
-                          retornoPinPad += "iniciou";
-                          
-                        MainActivity iniciar = (MainActivity) cordovaInt.getActivity();
-                           retornoPinPad += "iniciou sucesso";
-                    } catch (Exception e) {
-                        retornoPinPad += "2--";
-                        retornoPinPad += e.getMessage();
-                    }
 
-                }
-            });
-        } catch (Exception e) {
-            retornoPinPad += "1";
-            throw e;
-        }
-         retornoPinPad += "Fim";
+        new Thread(() -> {
+            retornoPinPad += "IniThRe";
+            try {
+                cordovaInt.getActivity().runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        try {
+                            retornoPinPad += "iniciou";
+
+                            MainActivity iniciar = (MainActivity) cordovaInt.getActivity();
+                            retornoPinPad += "iniciou sucesso";
+
+                            onUiThreadCompleted();
+                        } catch (Exception e) {
+                            retornoPinPad += "2--";
+                            retornoPinPad += e.getMessage();
+
+                            onUiThreadCompleted();
+                        }
+
+                    }
+                });
+            } catch (Exception e) {
+                retornoPinPad += "1";
+                throw e;
+            }
+        }).start();
+
+        retornoPinPad += "Fim";
+    }
+
+    private void onUiThreadCompleted() {
+
+        retornoPinPad += "FimDaTHread";
     }
 
     private void imprimirComprovante(String texto) throws PPCompException {
