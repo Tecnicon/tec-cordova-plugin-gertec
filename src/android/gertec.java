@@ -115,7 +115,7 @@ public class gertec extends CordovaPlugin {
                     } catch (Exception e) {
                         retornoPinPad += "2--";
                         retornoPinPad += e.getMessage();
-                        throw e;
+          
                     }
 
                 }
