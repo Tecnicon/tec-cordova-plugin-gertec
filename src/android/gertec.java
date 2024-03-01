@@ -98,6 +98,30 @@ public class gertec extends CordovaPlugin {
             }
             callbackContext.success("Ok....");
             return true;
+        } else if ("inicializar".equals(action)) {
+
+            String texto = args.toString();
+
+            try {
+                inicializar(texto);
+            } catch (Exception e) {
+                callbackContext.error(e.getMessage());
+                return false;
+            }
+            callbackContext.success("Ok....");
+            return true;
+        } else if ("aproximar".equals(action)) {
+
+            String texto = args.toString();
+
+            try {
+                aproximar(texto);
+            } catch (Exception e) {
+                callbackContext.error(e.getMessage());
+                return false;
+            }
+            callbackContext.success("Ok....");
+            return true;
         }
 
         callbackContext.error(action + " is not a supported action");
@@ -117,14 +141,12 @@ public class gertec extends CordovaPlugin {
                     public void run() {
                         try {
                             Activity currentActivity = cordovaInt.getActivity();
-                      //      retornoPinPad += currentActivity;
-              
-                         
+                            //      retornoPinPad += currentActivity;
+
                             retornoPinPad += " instanciou!;";
-                          //  br.com.tecnicon.apps.MainActivity iniciar = (br.com.tecnicon.apps.MainActivity) cordovaInt.getActivity();
-                             MainActivity iniciar = new MainActivity();
-                       //     MainActivity iniciar = (MainActivity) cordovaInt.getActivity();;
-                   
+                            //  br.com.tecnicon.apps.MainActivity iniciar = (br.com.tecnicon.apps.MainActivity) cordovaInt.getActivity();
+                            MainActivity iniciar = new MainActivity();
+                            //     MainActivity iniciar = (MainActivity) cordovaInt.getActivity();;
 
                         } catch (Exception e) {
 
@@ -154,6 +176,59 @@ public class gertec extends CordovaPlugin {
         Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+    }
+
+    private void inicializar(String texto) throws PPCompException, Exception {
+        PPComp ppComp;
+        ppComp = new PPComp(context);
+        ppComp.PP_Open();
+        String gcr_input = "0001000000001000691231210457012345678900";
+        String output = "";
+        StringBuffer msgNotify = new StringBuffer();
+
+        try {
+            ppComp.PP_StartGetCard(gcr_input);
+            while (true) {
+                try {
+                    mostrarMensagem("Insira o cartão...");
+                    output = ppComp.PP_GetCard();
+                    mostrarMensagem("Resultado = " + output);
+                    break;
+                } catch (PPCompProcessingException e) {
+                } catch (PPCompNotifyException e) {
+                } catch (PPCompTabExpException e) {
+                    ppComp.PP_ResumeGetCard();
+                }
+            }
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+
+    }
+
+    private void aproximar(String texto) throws PPCompException, Exception {
+        PPComp ppComp;
+        ppComp = new PPComp(context);
+        ppComp.PP_Open();
+        String goc_input = "000000001000000000000000001101000000000000000000000000000000001000003E820000003E880000";
+        String goc_inputTags = "0019B";
+        String goc_inputTagsOpt = "0119F0B1F813A9F6B9F6C9F66";
+        String output = "";
+        try {
+            ppComp.PP_StartGoOnChip(goc_input, goc_inputTags, goc_inputTagsOpt);
+            while (true) {
+                try {
+                    output = ppComp.PP_GoOnChip();
+                    mostrarMensagem("Resultado = " + output);
+                    //  imprimirComprovante();
+                    break;
+                } catch (PPCompProcessingException e) {
+                } catch (PPCompNotifyException e) {
+                }
+            }
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 
     private void imprimirComprovante(String texto) throws PPCompException {
