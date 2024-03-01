@@ -105,7 +105,7 @@ public class gertec extends CordovaPlugin {
     }
 
     private void inicializarPinPad() throws PPCompException, InterruptedException {
-        retornoPinPad = "Ini";
+        retornoPinPad = "Ini ";
 
         CountDownLatch latch = new CountDownLatch(1);
 
@@ -116,15 +116,22 @@ public class gertec extends CordovaPlugin {
                     @Override
                     public void run() {
                         try {
-                            mostrarMensagem("entrou2");
-                            MainActivity iniciar = (MainActivity) cordovaInt.getActivity();
-                            mostrarMensagem("entrou3");
+                            Activity currentActivity = cordovaInt.getActivity();
+                            retornoPinPad += currentActivity;
+
+                            if (!(cordovaInt.getActivity() instanceof MainActivity)) {
+                                retornoPinPad += " iniciou!;";
+                                iniciarMainActivity();
+                            } else {
+                                retornoPinPad += " instanciou!;";
+                                MainActivity iniciar = (MainActivity) cordovaInt.getActivity();
+                            }
 
                         } catch (Exception e) {
 
-                            mostrarMensagem("entrou4");
                             mostrarMensagem("entrou4" + e.getMessage());
                             retornoPinPad += e.getMessage();
+                            retornoPinPad += "::" + e;
 
                         } finally {
                             latch.countDown();
@@ -142,7 +149,12 @@ public class gertec extends CordovaPlugin {
             throw new RuntimeException(e);
         }
 
-        retornoPinPad += "Fim";
+    }
+
+    private void iniciarMainActivity() {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     private void imprimirComprovante(String texto) throws PPCompException {
