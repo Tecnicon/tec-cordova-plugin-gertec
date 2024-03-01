@@ -121,8 +121,8 @@ public class gertec extends CordovaPlugin {
                             
                             retornoPinPad += "outra";
 
-                            Activity currentActivity2 = MainActivity.getActivity();
-                            retornoPinPad += currentActivity2;
+                            //Activity currentActivity2 = MainActivity.getActivity();
+                            //retornoPinPad += currentActivity2;
 
                             //   if (!(cordovaInt.getActivity() instanceof MainActivity)) {
                             //     retornoPinPad += " iniciou!;";
