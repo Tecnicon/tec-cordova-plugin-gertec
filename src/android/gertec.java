@@ -117,21 +117,14 @@ public class gertec extends CordovaPlugin {
                     public void run() {
                         try {
                             Activity currentActivity = cordovaInt.getActivity();
-                            retornoPinPad += currentActivity;
-                            
-                            retornoPinPad += "outra";
-
-                            //Activity currentActivity2 = MainActivity.getActivity();
-                            //retornoPinPad += currentActivity2;
-
-                            //   if (!(cordovaInt.getActivity() instanceof MainActivity)) {
-                            //     retornoPinPad += " iniciou!;";
-                            //      iniciarMainActivity();
-                            //   } else {
+                      //      retornoPinPad += currentActivity;
+              
+                         
                             retornoPinPad += " instanciou!;";
-                            br.com.tecnicon.apps.MainActivity iniciar = (br.com.tecnicon.apps.MainActivity) cordovaInt.getActivity();
-                          //  MainActivity iniciar = (MainActivity) cordovaInt.getActivity();
-                            //  }
+                          //  br.com.tecnicon.apps.MainActivity iniciar = (br.com.tecnicon.apps.MainActivity) cordovaInt.getActivity();
+                             MainActivity iniciar = new MainActivity();
+                       //     MainActivity iniciar = (MainActivity) cordovaInt.getActivity();;
+                   
 
                         } catch (Exception e) {
 
