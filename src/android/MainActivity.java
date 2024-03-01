@@ -44,11 +44,13 @@ public class MainActivity extends AppCompatActivity {
     public static final int activity_main = 2131427356;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-  
+    protected void onCreate(Bundle savedInstanceState){
+        
+        mostraMensagem("1 on create");
         super.onCreate(savedInstanceState);
         setContentView(activity_main);
+        
+        mostraMensagem("2 on create");
 
         btnGCR = (Button) findViewById(buttonGCR);
         btnGOC = (Button) findViewById(buttonGOC);
