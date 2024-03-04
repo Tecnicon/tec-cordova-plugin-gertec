@@ -119,12 +119,14 @@ public class gertec extends CordovaPlugin {
         String horaAtualFormatada = horaAtual.format(formatter);
 
         retornoPinPad = "iniciou1";
+      
         PPComp ppComp;
         ppComp = new PPComp(context);
         retornoPinPad += "iniciou2";
        // ppComp.PP_InitLib();
-        retornoPinPad += "iniciou3";
-        ppComp.PP_Open();
+       
+        retornoPinPad += "iniciou3:" + context + " ppcomp:" + ppComp;
+       // ppComp.PP_Open();
         retornoPinPad += "iniciou4";
         String gcr_input = "000100000000001" + dataAtualFormatada + horaAtualFormatada + "7012345678900";
 
@@ -156,6 +158,7 @@ public class gertec extends CordovaPlugin {
 
     private void aproximar(String texto) throws PPCompException, Exception {
         PPComp ppComp;
+       
         ppComp = new PPComp(context);
       //  ppComp.PP_InitLib();
         ppComp.PP_Open();
