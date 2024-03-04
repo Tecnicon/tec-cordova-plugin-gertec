@@ -38,6 +38,9 @@ import br.com.gertec.ppcomp.exceptions.PPCompCancelException;
 import br.com.gertec.ppcomp.exceptions.PPCompNotifyException;
 import br.com.gertec.ppcomp.exceptions.PPCompProcessingException;
 import br.com.gertec.ppcomp.exceptions.PPCompTabExpException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 
 /**
  * This class echoes a string called from JavaScript.
@@ -74,30 +77,6 @@ public class gertec extends CordovaPlugin {
             }
             callbackContext.success("Ok...");
             return true;
-        } else if ("inicializarPinPad".equals(action)) {
-
-            String texto = args.toString();
-
-            try {
-                inicializarPinPad();
-            } catch (Exception e) {
-                callbackContext.error(e.getMessage());
-                return false;
-            }
-            callbackContext.success("sucesso:" + retornoPinPad);
-            return true;
-        } else if ("mostrarMensagem".equals(action)) {
-
-            String texto = args.toString();
-
-            try {
-                mostrarMensagem(texto);
-            } catch (Exception e) {
-                callbackContext.error(e.getMessage());
-                return false;
-            }
-            callbackContext.success("Ok....");
-            return true;
         } else if ("inicializar".equals(action)) {
 
             String texto = args.toString();
@@ -105,7 +84,7 @@ public class gertec extends CordovaPlugin {
             try {
                 inicializar(texto);
             } catch (Exception e) {
-                callbackContext.error(e.getMessage());
+                callbackContext.error(e.getMessage() + " inicializarPinPad:" + retornoPinPad);
                 return false;
             }
             callbackContext.success("Ok....");
@@ -128,69 +107,37 @@ public class gertec extends CordovaPlugin {
         return false;
     }
 
-    private void inicializarPinPad() throws PPCompException, InterruptedException {
-        retornoPinPad = "Ini ";
-
-        CountDownLatch latch = new CountDownLatch(1);
-
-        new Thread(() -> {
-            mostrarMensagem("entrou");
-            try {
-                cordovaInt.getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Activity currentActivity = cordovaInt.getActivity();
-                            //      retornoPinPad += currentActivity;
-
-                            retornoPinPad += " instanciou!;";
-                            //  br.com.tecnicon.apps.MainActivity iniciar = (br.com.tecnicon.apps.MainActivity) cordovaInt.getActivity();
-                            MainActivity iniciar = new MainActivity();
-                            //     MainActivity iniciar = (MainActivity) cordovaInt.getActivity();;
-
-                        } catch (Exception e) {
-
-                            mostrarMensagem("entrou4" + e.getMessage());
-                            retornoPinPad += e.getMessage();
-                            retornoPinPad += "::" + e;
-
-                        } finally {
-                            latch.countDown();
-                        }
-                    }
-                });
-            } catch (Exception e) {
-                throw e;
-            }
-        }).start();
-
-        try {
-            latch.await();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    private void iniciarMainActivity() {
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
-
     private void inicializar(String texto) throws PPCompException, Exception {
+
+        LocalTime horaAtual = LocalTime.now();
+         LocalDate dataAtual = LocalDate.now();
+         
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmmss");
+        DateTimeFormatter formatterYear = DateTimeFormatter.ofPattern("yyMMdd");
+        
+        String dataAtualFormatada = dataAtual.format(formatterYear);
+        String horaAtualFormatada = horaAtual.format(formatter);
+
+        retornoPinPad = "iniciou1";
         PPComp ppComp;
         ppComp = new PPComp(context);
+        retornoPinPad += "iniciou2";
+        ppComp.PP_InitLib();
+        retornoPinPad += "iniciou3";
         ppComp.PP_Open();
-        String gcr_input = "0001000000001000691231210457012345678900";
+        retornoPinPad += "iniciou4";
+        String gcr_input = "000100000000001" + dataAtualFormatada + horaAtualFormatada + "7012345678900";
+
         String output = "";
         StringBuffer msgNotify = new StringBuffer();
 
         try {
+            retornoPinPad += "iniciou5";
             ppComp.PP_StartGetCard(gcr_input);
             while (true) {
                 try {
                     mostrarMensagem("Insira o cartão...");
+                    retornoPinPad += "iniciou6";
                     output = ppComp.PP_GetCard();
                     mostrarMensagem("Resultado = " + output);
                     break;
@@ -201,7 +148,7 @@ public class gertec extends CordovaPlugin {
                 }
             }
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+            throw new Exception(e.getMessage() + " while");
         }
 
     }
@@ -209,6 +156,7 @@ public class gertec extends CordovaPlugin {
     private void aproximar(String texto) throws PPCompException, Exception {
         PPComp ppComp;
         ppComp = new PPComp(context);
+        ppComp.PP_InitLib();
         ppComp.PP_Open();
         String goc_input = "000000001000000000000000001101000000000000000000000000000000001000003E820000003E880000";
         String goc_inputTags = "0019B";
