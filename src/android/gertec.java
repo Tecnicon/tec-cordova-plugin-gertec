@@ -157,7 +157,7 @@ public class gertec extends CordovaPlugin {
     private void aproximar(String texto) throws PPCompException, Exception {
         PPComp ppComp;
         ppComp = new PPComp(context);
-        ppComp.PP_InitLib();
+      //  ppComp.PP_InitLib();
         ppComp.PP_Open();
         String goc_input = "000000001000000000000000001101000000000000000000000000000000001000003E820000003E880000";
         String goc_inputTags = "0019B";
