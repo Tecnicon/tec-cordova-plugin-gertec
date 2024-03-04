@@ -38,6 +38,8 @@ import br.com.gertec.ppcomp.exceptions.PPCompCancelException;
 import br.com.gertec.ppcomp.exceptions.PPCompNotifyException;
 import br.com.gertec.ppcomp.exceptions.PPCompProcessingException;
 import br.com.gertec.ppcomp.exceptions.PPCompTabExpException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
@@ -84,7 +86,7 @@ public class gertec extends CordovaPlugin {
             try {
                 inicializar(texto);
             } catch (Exception e) {
-                callbackContext.error(e.getMessage() + " inicializarPinPad:" + retornoPinPad);
+                callbackContext.error(obterLog(e) + " inicializarPinPad:" + retornoPinPad);
                 return false;
             }
             callbackContext.success("Ok....");
@@ -126,7 +128,7 @@ public class gertec extends CordovaPlugin {
        // ppComp.PP_InitLib();
        
         retornoPinPad += "iniciou3:" + context + " ppcomp:" + ppComp;
-       // ppComp.PP_Open();
+        ppComp.PP_Open();
         retornoPinPad += "iniciou4";
         String gcr_input = "000100000000001" + dataAtualFormatada + horaAtualFormatada + "7012345678900";
 
@@ -182,7 +184,19 @@ public class gertec extends CordovaPlugin {
             throw new Exception(e.getMessage());
         }
     }
+    
+  private String obterLog(Exception ex)
+    {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
 
+        StringBuilder strRet = new StringBuilder();
+        strRet.append("Mensagem: ").append(ex.getMessage()).append("\n");
+        strRet.append("Linha: ").append(ex.getStackTrace()[0].getLineNumber()).append("\n");
+        strRet.append("StackTrace: ").append(sw.toString());
+        return strRet.toString();
+    }
+  
     private void imprimirComprovante(String texto) throws PPCompException {
 
         GEDI.init(context);
