@@ -122,7 +122,7 @@ public class gertec extends CordovaPlugin {
         PPComp ppComp;
         ppComp = new PPComp(context);
         retornoPinPad += "iniciou2";
-        ppComp.PP_InitLib();
+       // ppComp.PP_InitLib();
         retornoPinPad += "iniciou3";
         ppComp.PP_Open();
         retornoPinPad += "iniciou4";
@@ -139,6 +139,7 @@ public class gertec extends CordovaPlugin {
                     mostrarMensagem("Insira o cartão...");
                     retornoPinPad += "iniciou6";
                     output = ppComp.PP_GetCard();
+                     retornoPinPad += "Resultado:" + output;
                     mostrarMensagem("Resultado = " + output);
                     break;
                 } catch (PPCompProcessingException e) {
