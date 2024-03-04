@@ -112,21 +112,21 @@ public class gertec extends CordovaPlugin {
     private void inicializar(String texto) throws PPCompException, Exception {
 
         LocalTime horaAtual = LocalTime.now();
-         LocalDate dataAtual = LocalDate.now();
-         
+        LocalDate dataAtual = LocalDate.now();
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmmss");
         DateTimeFormatter formatterYear = DateTimeFormatter.ofPattern("yyMMdd");
-        
+
         String dataAtualFormatada = dataAtual.format(formatterYear);
         String horaAtualFormatada = horaAtual.format(formatter);
 
         retornoPinPad = "iniciou1";
-      
+
         PPComp ppComp;
         ppComp = new PPComp(context);
         retornoPinPad += "iniciou2";
-       // ppComp.PP_InitLib();
-       
+        // ppComp.PP_InitLib();
+
         retornoPinPad += "iniciou3:" + context + " ppcomp:" + ppComp;
         ppComp.PP_Open();
         retornoPinPad += "iniciou4";
@@ -143,7 +143,7 @@ public class gertec extends CordovaPlugin {
                     mostrarMensagem("Insira o cartão...");
                     retornoPinPad += "iniciou6";
                     output = ppComp.PP_GetCard();
-                     retornoPinPad += "Resultado:" + output;
+                    retornoPinPad += "Resultado:" + output;
                     mostrarMensagem("Resultado = " + output);
                     break;
                 } catch (PPCompProcessingException e) {
@@ -160,9 +160,9 @@ public class gertec extends CordovaPlugin {
 
     private void aproximar(String texto) throws PPCompException, Exception {
         PPComp ppComp;
-       
+
         ppComp = new PPComp(context);
-      //  ppComp.PP_InitLib();
+        //ppComp.PP_InitLib();
         ppComp.PP_Open();
         String goc_input = "000000001000000000000000001101000000000000000000000000000000001000003E820000003E880000";
         String goc_inputTags = "0019B";
@@ -184,11 +184,12 @@ public class gertec extends CordovaPlugin {
             throw new Exception(e.getMessage());
         }
     }
-    
-  private String obterLog(Exception ex)
-    {
+
+    private String obterLog(Exception ex) {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
+        ex.printStackTrace(pw);
+
 
         StringBuilder strRet = new StringBuilder();
         strRet.append("Mensagem: ").append(ex.getMessage()).append("\n");
@@ -196,7 +197,7 @@ public class gertec extends CordovaPlugin {
         strRet.append("StackTrace: ").append(sw.toString());
         return strRet.toString();
     }
-  
+
     private void imprimirComprovante(String texto) throws PPCompException {
 
         GEDI.init(context);
