@@ -96,7 +96,7 @@ public class gertec extends CordovaPlugin {
             String texto = args.toString();
 
             try {
-                aproximar(texto);
+                irnochip(texto);
             } catch (Exception e) {
                 callbackContext.error(e.getMessage());
                 return false;
@@ -120,17 +120,20 @@ public class gertec extends CordovaPlugin {
         String dataAtualFormatada = dataAtual.format(formatterYear);
         String horaAtualFormatada = horaAtual.format(formatter);
 
-        retornoPinPad = "iniciou1";
+        String valorTransacaoCentavos = "000000000001";
 
         PPComp ppComp;
-        ppComp = new PPComp(context);
+        //ppComp = new PPComp(context);
+        ppComp = PPComp.getInstance(context);
         retornoPinPad += "iniciou2";
-        // ppComp.PP_InitLib();
+        //  ppComp.PP_InitLib();
 
         retornoPinPad += "iniciou3:" + context + " ppcomp:" + ppComp;
         ppComp.PP_Open();
         retornoPinPad += "iniciou4";
-        String gcr_input = "000100000000001" + dataAtualFormatada + horaAtualFormatada + "7012345678900";
+
+        //String timeStamp = ppComp.PP_GetTimeStamp("00");
+        String gcr_input = "0099" + valorTransacaoCentavos + dataAtualFormatada + horaAtualFormatada + "000000000000";
 
         String output = "";
         StringBuffer msgNotify = new StringBuffer();
@@ -158,13 +161,14 @@ public class gertec extends CordovaPlugin {
 
     }
 
-    private void aproximar(String texto) throws PPCompException, Exception {
+    private void irnochip(String texto) throws PPCompException, Exception {
+        String valorTransacaoCentavos = "000000000001";
         PPComp ppComp;
 
         ppComp = new PPComp(context);
         //ppComp.PP_InitLib();
         ppComp.PP_Open();
-        String goc_input = "000000001000000000000000001101000000000000000000000000000000001000003E820000003E880000";
+        String goc_input = valorTransacaoCentavos + "000000000000001101000000000000000000000000000000001000003E820000003E880000";
         String goc_inputTags = "0019B";
         String goc_inputTagsOpt = "0119F0B1F813A9F6B9F6C9F66";
         String output = "";
@@ -183,19 +187,6 @@ public class gertec extends CordovaPlugin {
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
-    }
-
-    private String obterLog(Exception ex) {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        ex.printStackTrace(pw);
-
-
-        StringBuilder strRet = new StringBuilder();
-        strRet.append("Mensagem: ").append(ex.getMessage()).append("\n");
-        strRet.append("Linha: ").append(ex.getStackTrace()[0].getLineNumber()).append("\n");
-        strRet.append("StackTrace: ").append(sw.toString());
-        return strRet.toString();
     }
 
     private void imprimirComprovante(String texto) throws PPCompException {
@@ -228,6 +219,18 @@ public class gertec extends CordovaPlugin {
                 Toast.makeText(context, texto, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private String obterLog(Exception ex) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        ex.printStackTrace(pw);
+
+        StringBuilder strRet = new StringBuilder();
+        strRet.append("Mensagem: ").append(ex.getMessage()).append("\n");
+        strRet.append("Linha: ").append(ex.getStackTrace()[0].getLineNumber()).append("\n");
+        strRet.append("StackTrace: ").append(sw.toString());
+        return strRet.toString();
     }
 
 }
