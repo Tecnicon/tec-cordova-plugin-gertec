@@ -119,7 +119,8 @@ public class gertec extends CordovaPlugin {
             try {
                 irnochip(texto);
             } catch (Exception e) {
-                callbackContext.error(e.getMessage());
+                callbackContext.error(obterLog(e) + " aproximar:" + retornoPinPad);
+                // callbackContext.error(e.getMessage());
                 return false;
             }
             callbackContext.success("Ok....");
@@ -144,15 +145,20 @@ public class gertec extends CordovaPlugin {
         String valorTransacaoCentavos = "000000000001";
 
         PPComp ppComp;
-         retornoPinPad += "iniciou0";
+
+        GEDI.init(context);
+        mGedi = GEDI.getInstance(context);
+        IPRNTR mPRNTR = mGedi.getPRNTR();
+
+        retornoPinPad += "iniciou0";
         ppComp = new PPComp(context);
-         retornoPinPad += "iniciou1";
+        retornoPinPad += "iniciou1";
         ppComp = PPComp.getInstance(context);
         retornoPinPad += "iniciou2";
         //  ppComp.PP_InitLib();
 
         retornoPinPad += "iniciou3:" + context + " ppcomp:" + ppComp;
-        
+
         ppComp.PP_Open();
         retornoPinPad += "iniciou4";
 
@@ -186,14 +192,14 @@ public class gertec extends CordovaPlugin {
 
     }
 
-    
     private void irnochip(String texto) throws PPCompException, Exception {
         String valorTransacaoCentavos = "000000000001";
         PPComp ppComp;
-
-        ppComp = new PPComp(context);
+        GEDI.init(context);
+        mGedi = GEDI.getInstance(context);
+        IPRNTR mPRNTR = mGedi.getPRNTR();
+        //  ppComp = new PPComp(context);
         ppComp = PPComp.getInstance(context);
-        //ppComp.PP_InitLib();
         ppComp.PP_Open();
         String goc_input = valorTransacaoCentavos + "000000000000001101000000000000000000000000000000001000003E820000003E880000";
         String goc_inputTags = "0019B";
@@ -215,7 +221,6 @@ public class gertec extends CordovaPlugin {
             throw new Exception(e.getMessage());
         }
     }
-    
 
     public void carregarRegistros() throws Exception {
         String input = idRede + timeStamp;
