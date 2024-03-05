@@ -166,6 +166,7 @@ public class gertec extends CordovaPlugin {
         PPComp ppComp;
 
         ppComp = new PPComp(context);
+                ppComp = PPComp.getInstance(context);
         //ppComp.PP_InitLib();
         ppComp.PP_Open();
         String goc_input = valorTransacaoCentavos + "000000000000001101000000000000000000000000000000001000003E820000003E880000";
