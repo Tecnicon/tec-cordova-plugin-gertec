@@ -113,7 +113,7 @@ public class gertec extends CordovaPlugin {
                 callbackContext.error(obterLog(e) + " inicializarPinPad:" + retornoPinPad);
                 return false;
             }
-            callbackContext.success("Ok....");
+         //   callbackContext.success("Ok....");
             return true;
         } else if ("aproximar".equals(action)) {
 
