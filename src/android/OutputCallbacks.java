@@ -91,7 +91,7 @@ class OutputCallbacks implements IPPCompDSPCallbacks {
                 txtPinDisplay = "";
                 
             }*/
-            callbackContext.sucess("Texto1:: " + sTxt1 + " Texto2:: " + sTxt2);
+            callbackContext.success("Texto1:: " + sTxt1 + " Texto2:: " + sTxt2);
             sTxt2Pin = sTxt2.length();
         }
     }
