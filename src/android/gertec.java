@@ -44,6 +44,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 
+import br.com.gertec.ppcomp.IPPCompDSPCallbacks;
+
 /**
  * This class echoes a string called from JavaScript.
  */
@@ -76,7 +78,8 @@ public class gertec extends CordovaPlugin {
         "61120105A0000000250E01103FFFF144AA94A8C6DAD24F9BA56A27C09B01020819568B81A026BE9FD0A3416CA9A71166ED5084ED91CED47DD457DB7E6CBCD53E560BC5DF48ABC380993B6D549F5196CFA77DFB20A0296188E969A2772E8C4141665F8BB2516BA2C7B5FC91F8DA04E8D512EB0F6411516FB86FC021CE7E969DA94D33937909A53A57F907C40C22009DA7532CB3BE509AE173B39AD6A01BA5BB85FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         "61120106A0000000256201103FFFF096BA29DE83090D8D5F4DFFCEB98918995A768F41D0183E1ACA3EF8D5ED9062853E4080E0D289A5CEDD4DD96B1FEA2C53428436CE15A2A1BFE69D46197D3F5A79BCF8F4858BFFA04EDB07FC5BE8560D9CE38F5C3CA3C742EDFDBAE3B5E6DDA45557FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000000000000000000000000000000000000000000000000000000000000000000000000000000"};
 
-    String idRede = "01"; //Índice da rede adquirente
+    String idRede = "00"; //Índice da rede adquirente
+    //               01
     String timeStamp = "0123456789"; //Timestamp
 
     @Override
@@ -105,7 +108,7 @@ public class gertec extends CordovaPlugin {
             String texto = args.toString();
 
             try {
-                inicializar(texto);
+                inicializar(texto, callbackContext);
             } catch (Exception e) {
                 callbackContext.error(obterLog(e) + " inicializarPinPad:" + retornoPinPad);
                 return false;
@@ -131,7 +134,7 @@ public class gertec extends CordovaPlugin {
         return false;
     }
 
-    private void inicializar(String texto) throws PPCompException, Exception {
+    private void inicializar(String texto, CallbackContext callbackContext) throws PPCompException, Exception {
 
         LocalTime horaAtual = LocalTime.now();
         LocalDate dataAtual = LocalDate.now();
@@ -152,17 +155,22 @@ public class gertec extends CordovaPlugin {
 
         retornoPinPad += "iniciou0";
         ppComp = new PPComp(context);
+
         retornoPinPad += "iniciou1";
         ppComp = PPComp.getInstance(context);
         retornoPinPad += "iniciou2";
-        //  ppComp.PP_InitLib();
-
-        retornoPinPad += "iniciou3:" + context + " ppcomp:" + ppComp;
 
         ppComp.PP_Open();
+
+        retornoPinPad += "iniciou33";
+
+        OutputCallbacks outputCallbacks = new OutputCallbacks(context, ppComp, callbackContext);
+        ppComp.PP_SetDspCallbacks(outputCallbacks);
+
         retornoPinPad += "iniciou4";
 
         //String timeStamp = ppComp.PP_GetTimeStamp("00");
+        
         String gcr_input = "0099" + valorTransacaoCentavos + dataAtualFormatada + horaAtualFormatada + "000000000000";
 
         String output = "";
