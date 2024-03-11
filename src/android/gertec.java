@@ -143,7 +143,7 @@ public class gertec extends CordovaPlugin {
       //  retornoPinPad += "iniciou0";
         ppComp = new PPComp(context);
       //  retornoPinPad += "iniciou1";
-        ppComp = PPComp.getInstance(context);
+      //  ppComp = PPComp.getInstance(context);
        // retornoPinPad += "iniciou2";
         ppComp.PP_Open();
      //   retornoPinPad += "iniciou33";
