@@ -115,20 +115,7 @@ public class gertec extends CordovaPlugin {
             }
          //   callbackContext.success("Ok....");
             return true;
-        } else if ("aproximar".equals(action)) {
-
-            String texto = args.toString();
-
-            try {
-                irnochip(texto);
-            } catch (Exception e) {
-                callbackContext.error(obterLog(e) + " aproximar:" + retornoPinPad);
-                // callbackContext.error(e.getMessage());
-                return false;
-            }
-            callbackContext.success("Ok....");
-            return true;
-        }
+        } 
 
         callbackContext.error(action + " is not a supported action");
         return false;
@@ -153,23 +140,17 @@ public class gertec extends CordovaPlugin {
         mGedi = GEDI.getInstance(context);
         IPRNTR mPRNTR = mGedi.getPRNTR();
 
-        retornoPinPad += "iniciou0";
+      //  retornoPinPad += "iniciou0";
         ppComp = new PPComp(context);
-
-
-
-        
-        retornoPinPad += "iniciou1";
+      //  retornoPinPad += "iniciou1";
         ppComp = PPComp.getInstance(context);
-        retornoPinPad += "iniciou2";
+       // retornoPinPad += "iniciou2";
         ppComp.PP_Open();
-
-        retornoPinPad += "iniciou33";
+     //   retornoPinPad += "iniciou33";
 
         OutputCallbacks outputCallbacks = new OutputCallbacks(context, ppComp, callbackContext);
         ppComp.PP_SetDspCallbacks(outputCallbacks);
-
-        retornoPinPad += "iniciou4";
+  //      retornoPinPad += "iniciou4";
 
         //String timeStamp = ppComp.PP_GetTimeStamp("00");
         
@@ -179,7 +160,7 @@ public class gertec extends CordovaPlugin {
         StringBuffer msgNotify = new StringBuffer();
 
         try {
-            retornoPinPad += "iniciou5";
+          //  retornoPinPad += "iniciou5";
             ppComp.PP_StartGetCard(gcr_input);
             while (true) {
                 try {
