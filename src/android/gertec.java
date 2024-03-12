@@ -140,17 +140,12 @@ public class gertec extends CordovaPlugin {
         mGedi = GEDI.getInstance(context);
         IPRNTR mPRNTR = mGedi.getPRNTR();
 
-      //  retornoPinPad += "iniciou0";
         ppComp = new PPComp(context);
-      //  retornoPinPad += "iniciou1";
       //  ppComp = PPComp.getInstance(context);
-       // retornoPinPad += "iniciou2";
         ppComp.PP_Open();
-     //   retornoPinPad += "iniciou33";
 
         OutputCallbacks outputCallbacks = new OutputCallbacks(context, ppComp, callbackContext);
         ppComp.PP_SetDspCallbacks(outputCallbacks);
-  //      retornoPinPad += "iniciou4";
 
         //String timeStamp = ppComp.PP_GetTimeStamp("00");
         
@@ -160,7 +155,6 @@ public class gertec extends CordovaPlugin {
         StringBuffer msgNotify = new StringBuffer();
 
         try {
-          //  retornoPinPad += "iniciou5";
             ppComp.PP_StartGetCard(gcr_input);
             while (true) {
                 try {
@@ -183,7 +177,7 @@ public class gertec extends CordovaPlugin {
 
     }
 
-    private void irnochip(String texto) throws PPCompException, Exception {
+    private void PP_GoOnChip (String texto) throws PPCompException, Exception {
         String valorTransacaoCentavos = "000000000001";
         PPComp ppComp;
         GEDI.init(context);
