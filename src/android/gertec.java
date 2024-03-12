@@ -162,6 +162,7 @@ public class gertec extends CordovaPlugin {
                     retornoPinPad += "iniciou6";
                     output = ppComp.PP_GetCard();
                     retornoPinPad += "Resultado:" + output;
+                    // PP_GOONCHIP() 
                     mostrarMensagem("Resultado = " + output);
                     break;
                 } catch (PPCompProcessingException e) {
