@@ -65,20 +65,20 @@ int string btnEnterTag 0x7f0e0028
 
         frameLayout_pin.addView(child);
         mKBDData = new KBDData();
-        mKBDData.btn0 = rootView.findViewWithTag(getString(btn0Tag));
-        mKBDData.btn1 = rootView.findViewWithTag(getString(btn1Tag));
-        mKBDData.btn2 = rootView.findViewWithTag(getString(btn2Tag));
-        mKBDData.btn3 = rootView.findViewWithTag(getString(btn3Tag));
-        mKBDData.btn4 = rootView.findViewWithTag(getString(btn4Tag));
-        mKBDData.btn5 = rootView.findViewWithTag(getString(btn5Tag));
-        mKBDData.btn6 = rootView.findViewWithTag(getString(btn6Tag));
-        mKBDData.btn7 = rootView.findViewWithTag(getString(btn7Tag));
-        mKBDData.btn8 = rootView.findViewWithTag(getString(btn8Tag));
-        mKBDData.btn9 = rootView.findViewWithTag(getString(btn9Tag));
-        mKBDData.btnCancel = rootView.findViewWithTag(getString(btnCancelTag));
-        mKBDData.btnClear = rootView.findViewWithTag(getString(btnClearTag));
-        mKBDData.btnConfirm = rootView.findViewWithTag(getString(btnEnterTag));
-        mKBDData.textView = rootView.findViewWithTag(getString(lblDigitsTag));
+        mKBDData.btn0 = rootView.findViewWithTag(btn0Tag);
+        mKBDData.btn1 = rootView.findViewWithTag(btn1Tag);
+        mKBDData.btn2 = rootView.findViewWithTag(btn2Tag);
+        mKBDData.btn3 = rootView.findViewWithTag(btn3Tag);
+        mKBDData.btn4 = rootView.findViewWithTag(btn4Tag);
+        mKBDData.btn5 = rootView.findViewWithTag(btn5Tag);
+        mKBDData.btn6 = rootView.findViewWithTag(btn6Tag);
+        mKBDData.btn7 = rootView.findViewWithTag(btn7Tag);
+        mKBDData.btn8 = rootView.findViewWithTag(btn8Tag);
+        mKBDData.btn9 = rootView.findViewWithTag(btn9Tag);
+        mKBDData.btnCancel = rootView.findViewWithTag(btnCancelTag);
+        mKBDData.btnClear = rootView.findViewWithTag(btnClearTag);
+        mKBDData.btnConfirm = rootView.findViewWithTag(btnEnterTag);
+        mKBDData.textView = rootView.findViewWithTag(lblDigitsTag);
         mKBDData.activity = PinKBDActivity.this;
 
     }
