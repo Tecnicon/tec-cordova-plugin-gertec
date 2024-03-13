@@ -52,6 +52,7 @@ public class gertec extends CordovaPlugin {
 
     private Context context;
     private CordovaInterface cordovaInt;
+    private String retornoInit;
 
     IGEDI mGedi;
     Button btnGCR;
@@ -95,14 +96,13 @@ public class gertec extends CordovaPlugin {
                 mGedi = GEDI.getInstance(context);
                 IPRNTR mPRNTR = mGedi.getPRNTR();
 
-                ppComp = new PPComp(context);
+                ppComp = PPComp.getInstance(context);
                 try {              
                     ppComp.PP_Open();
                     OutputCallbacks outputCallbacks = new OutputCallbacks(context, ppComp);
                     ppComp.PP_SetDspCallbacks(outputCallbacks);
-                } catch (PPCompException e) {
-                    
-            
+                } catch (Exception e) {
+                   retornoInit = obterLog(e);
                 }
             }
         }).start();
@@ -128,7 +128,7 @@ public class gertec extends CordovaPlugin {
             try {
                 inicializar(texto, callbackContext);
             } catch (Exception e) {
-                callbackContext.error(obterLog(e) + " inicializarPinPad:" + retornoPinPad);
+                callbackContext.error("inicializacao ppcomp" + retornoInit+ "fim" + obterLog(e) + " inicializarPinPad:" + retornoPinPad);
                 return false;
             }
             callbackContext.success("Ok....");
@@ -152,7 +152,7 @@ public class gertec extends CordovaPlugin {
 
         String valorTransacaoCentavos = "000000000001";
 
-        //  ppComp = PPComp.getInstance(context);
+ 
         //String timeStamp = ppComp.PP_GetTimeStamp("00");
         String gcr_input = "0099" + valorTransacaoCentavos + dataAtualFormatada + horaAtualFormatada + "000000000000";
 
