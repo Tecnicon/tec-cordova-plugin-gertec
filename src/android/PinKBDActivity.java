@@ -36,10 +36,12 @@ int string btnCancelTag 0x7f0e0026
 int string btnClearTag 0x7f0e0027
 int string btnEnterTag 0x7f0e0028
         int string lblDigitsTag 0x7f0e0039
+        int layout activity_manta 0x7f0b001d
          */
 
-        String frameMantaLayout_pin = "0x7f0800a2";
-        String teclado_pin = "0x7f0b002b";
+        int frameMantaLayout_pin = 0x7f0800a2;
+        int teclado_pin = 0x7f0b002b;
+        int activity_manta = 0x7f0b001d;
         String btn0Tag = "0x7f0e001c";
         String btn1Tag = "0x7f0e001d";
         String btn2Tag = "0x7f0e001e";
@@ -55,7 +57,7 @@ int string btnEnterTag 0x7f0e0028
         String btnEnterTag = "0x7f0e0028";
         String lblDigitsTag = "0x7f0e0039";
 
-        setContentView(R.layout.activity_manta);
+        setContentView(activity_manta);
         final View rootView = getWindow().getDecorView().getRootView();
 
         FrameLayout frameLayout_pin = findViewById(frameMantaLayout_pin);
