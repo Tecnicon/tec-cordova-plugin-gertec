@@ -66,7 +66,7 @@ class OutputCallbacks implements IPPCompDSPCallbacks {
                 //PIN_STARTING_S
             }
             txtPinDisplay = "";
-            Log.d(TAG, "SHOW KBD");
+
             showKBD();
         }
         if (lFlags == 512 && sTxt2.length() == 0 && sTxt2Pin == -1) {
