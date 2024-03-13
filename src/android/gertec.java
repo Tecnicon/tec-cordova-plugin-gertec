@@ -43,7 +43,6 @@ import java.io.StringWriter;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
-
 import br.com.gertec.ppcomp.IPPCompDSPCallbacks;
 
 /**
@@ -88,6 +87,25 @@ public class gertec extends CordovaPlugin {
         super.initialize(cordova, webView);
         this.context = cordova.getActivity().getApplicationContext();
         this.cordovaInt = cordova;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                GEDI.init(context);
+                mGedi = GEDI.getInstance(context);
+                IPRNTR mPRNTR = mGedi.getPRNTR();
+
+                ppComp = new PPComp(context);
+                try {              
+                    ppComp.PP_Open();
+                    OutputCallbacks outputCallbacks = new OutputCallbacks(context, ppComp);
+                    ppComp.PP_SetDspCallbacks(outputCallbacks);
+                } catch (PPCompException e) {
+                    
+            
+                }
+            }
+        }).start();
     }
 
     @Override
@@ -113,9 +131,9 @@ public class gertec extends CordovaPlugin {
                 callbackContext.error(obterLog(e) + " inicializarPinPad:" + retornoPinPad);
                 return false;
             }
-         //   callbackContext.success("Ok....");
+            callbackContext.success("Ok....");
             return true;
-        } 
+        }
 
         callbackContext.error(action + " is not a supported action");
         return false;
@@ -134,21 +152,8 @@ public class gertec extends CordovaPlugin {
 
         String valorTransacaoCentavos = "000000000001";
 
-        PPComp ppComp;
-
-        GEDI.init(context);
-        mGedi = GEDI.getInstance(context);
-        IPRNTR mPRNTR = mGedi.getPRNTR();
-
-        ppComp = new PPComp(context);
-      //  ppComp = PPComp.getInstance(context);
-        ppComp.PP_Open();
-
-        OutputCallbacks outputCallbacks = new OutputCallbacks(context, ppComp, callbackContext);
-        ppComp.PP_SetDspCallbacks(outputCallbacks);
-
+        //  ppComp = PPComp.getInstance(context);
         //String timeStamp = ppComp.PP_GetTimeStamp("00");
-        
         String gcr_input = "0099" + valorTransacaoCentavos + dataAtualFormatada + horaAtualFormatada + "000000000000";
 
         String output = "";
@@ -178,7 +183,7 @@ public class gertec extends CordovaPlugin {
 
     }
 
-    private void PP_GoOnChip (String texto) throws PPCompException, Exception {
+    private void PP_GoOnChip(String texto) throws PPCompException, Exception {
         String valorTransacaoCentavos = "000000000001";
         PPComp ppComp;
         GEDI.init(context);
@@ -243,8 +248,8 @@ public class gertec extends CordovaPlugin {
 
     private void imprimirComprovante(String texto) throws PPCompException {
 
-        GEDI.init(context);
-        mGedi = GEDI.getInstance(context);
+       // GEDI.init(context);
+       // mGedi = GEDI.getInstance(context);
 
         new Thread(() -> {
             IPRNTR mPRNTR = mGedi.getPRNTR();
