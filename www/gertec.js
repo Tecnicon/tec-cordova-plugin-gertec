@@ -12,6 +12,7 @@ gertec.inicializar = function (text, onSuccess, onFail) {
 	cordova.exec(onSuccess, onFail, "gertec", "inicializar", [text]);
 };
 
+
 var gertec = new gertec();
 module.exports = gertec;
 

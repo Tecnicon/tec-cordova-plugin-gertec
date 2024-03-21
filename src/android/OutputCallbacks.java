@@ -1,40 +1,67 @@
 package gertec;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.ToneGenerator;
 import android.util.Log;
-import android.view.ViewTreeObserver;
+import android.widget.ImageView;
+
 import java.util.List;
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicLong;
+
 import br.com.gertec.ppcomp.IPPCompDSPCallbacks;
 import br.com.gertec.ppcomp.PPComp;
+import kotlin.jvm.Synchronized;
 
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-
-class OutputCallbacks implements IPPCompDSPCallbacks {
+public class OutputCallbacks implements IPPCompDSPCallbacks {
     String mMenuTitle = "";
     int mSelectedItem;
     int sTxt2Pin = -1;
     boolean isClear = false;
     boolean wasCancelBefore = false;
     Context context;
+    ImageView ledAzul;
     PPComp ppComp;
     String txtPinDisplay = "";
 
-    public OutputCallbacks(Context context, PPComp ppComp) {
+    public OutputCallbacks(Context context, ImageView ledAzul, PPComp ppComp) {
         this.context = context;
         this.ppComp = ppComp;
+        this.ledAzul = ledAzul;
     }
 
 
     @Override
     public void Text(long lFlags, final String sTxt1, final String sTxt2) {
-
+       
         if (lFlags == 135170) {
            //INSERT_SWIPE_CARD
-        } else if (lFlags == 327940) {
+        } else if (lFlags == 72) {
+            //AZUL
+        
+            Activity activity = (Activity) context;
+            activity.runOnUiThread(new Runnable() {
+                public void run() {
+                   //ledAzul.setImageResource(R.drawable.led_azul);
+                    Log.d("UI thread", "I am the UI thread");
+                }
+            });
+        }
+        else if (lFlags == 64) {
+            //DESLIGA LED
+      
+            Activity activity = (Activity) context;
+            activity.runOnUiThread(new Runnable() {
+                public void run() {
+                    //ledAzul.setImageResource(R.drawable.led);
+               
+                }
+            });
+        }
+        else if (lFlags == 327940) {
            //INVALID_APP
         } else if (lFlags == 4099) {
             //SECOND_TAP
@@ -66,7 +93,7 @@ class OutputCallbacks implements IPPCompDSPCallbacks {
                 //PIN_STARTING_S
             }
             txtPinDisplay = "";
-
+       
             showKBD();
         }
         if (lFlags == 512 && sTxt2.length() == 0 && sTxt2Pin == -1) {
@@ -119,12 +146,12 @@ class OutputCallbacks implements IPPCompDSPCallbacks {
 
     @Override
     public int MenuShow(long lFlags, final List<String> lsOpts, final int iOptSel) {
- 
+   
         for (String opt : lsOpts) {
-     
+        
         }
 
-   
+     
 
         return mSelectedItem;
     }
@@ -144,11 +171,13 @@ class OutputCallbacks implements IPPCompDSPCallbacks {
         openPinKBD();
         //Aguarda até que ela tenha sido iniciada
         waitActivityOpen();
-        KBDData kbdData = PinKBDActivity.getKBDData();
-        //Seta o teclado na PPComp
-        ppComp.PP_SetKbd(kbdData.btn1, kbdData.btn2, kbdData.btn3, kbdData.btn4,
-                kbdData.btn5, kbdData.btn6, kbdData.btn7, kbdData.btn8, kbdData.btn9, kbdData.btn0, kbdData.btnCancel, kbdData.btnConfirm, kbdData.btnClear,
-                kbdData.activity);
+        synchronized (this) {
+            KBDData kbdData = PinKBDActivity.getKBDData();
+            //Seta o teclado na PPComp
+            ppComp.PP_SetKbd(kbdData.btn1, kbdData.btn2, kbdData.btn3, kbdData.btn4,
+                    kbdData.btn5, kbdData.btn6, kbdData.btn7, kbdData.btn8, kbdData.btn9, kbdData.btn0, kbdData.btnCancel, kbdData.btnConfirm, kbdData.btnClear,
+                    kbdData.activity);
+        }
     }
 
     public void openPinKBD() {
@@ -162,14 +191,15 @@ class OutputCallbacks implements IPPCompDSPCallbacks {
     }
 
     public int waitActivityOpen() {
-
+   
         try {
             while (!PinKBDActivity.active) {
+               
             }
-
+            
         } catch (Exception e) {
-        
-         
+           
+            e.printStackTrace();
         }
         return 0;
     }
