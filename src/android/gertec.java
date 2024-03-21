@@ -132,13 +132,13 @@ public class gertec extends CordovaPlugin {
         //String timeStamp = ppComp.PP_GetTimeStamp("00");
         String gcr_input = "0099" + valorTransacaoCentavos + dataAtualFormatada + horaAtualFormatada + "000000000000";*/
      
-       cordovaInt.getActivity().runOnUiThread(new Runnable() {
+     /*  cordovaInt.getActivity().runOnUiThread(new Runnable() {
         @Override
         public void run() {
             Intent intent = new Intent(cordova.getActivity(), MainActivity.class);
             cordovaInt.getActivity().startActivity(intent);
         }
-    });
+    });*/
 
 
     }
