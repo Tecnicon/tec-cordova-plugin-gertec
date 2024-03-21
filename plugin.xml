@@ -14,6 +14,7 @@
         <config-file parent="/*" target="AndroidManifest.xml"></config-file>
         <source-file src="src/android/gertec.java" target-dir="src/android" />   
         <lib-file src="src/android/libs/GediGPOS720.jar" />
+        <lib-file src="src/android/libs/libdorteste.jar" />
         <lib-file src="src/android/libs/GandiGPOS720.jar" />
         <lib-file src="src/android/libs/PPCompGPOS720.jar" />
     </platform>
