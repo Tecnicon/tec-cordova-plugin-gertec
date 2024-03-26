@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import br.com.gertec.exemplo_init.R;
 
 public class PinKBDActivity extends Activity {
     private static final String TAG = PinKBDActivity.class.getName();
@@ -16,7 +15,7 @@ public class PinKBDActivity extends Activity {
         super.onCreate(savedInstanceState);
         setFinishOnTouchOutside(false);
 
-        setContentView(R.layout.teclado_pin);
+    //    setContentView(R.layout.teclado_pin);
         final View rootView = getWindow().getDecorView().getRootView();
 
        /* mKBDData = new KBDData();
