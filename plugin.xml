@@ -18,7 +18,6 @@
         <source-file src="src/android/MainActivity.java" target-dir="src/android" />   
         <source-file src="src/android/KBDData.java" target-dir="src/android" />   
         <lib-file src="src/android/libs/GediGPOS720.jar" />
-        <lib-file src="src/android/libs/R.jar" />
         <lib-file src="src/android/libs/GandiGPOS720.jar" />
         <lib-file src="src/android/libs/PPCompGPOS720.jar" />
     </platform>
