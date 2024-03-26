@@ -45,6 +45,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import br.com.gertec.ppcomp.IPPCompDSPCallbacks;
 
+
 /**
  * This class echoes a string called from JavaScript.
  */
@@ -109,6 +110,15 @@ public class gertec extends CordovaPlugin {
             }
             callbackContext.success("Ok....");
             return true;
+        } else if (action.equals("findViewWithTag")) {
+            String tag = args.getString(0);
+            View view = webView.getView().findViewWithTag(tag);
+            if (view != null) {
+                callbackContext.success(view.getId());
+            } else {
+                callbackContext.error("View not found with tag: " + tag);
+            }
+            return true;
         }
 
         callbackContext.error(action + " is not a supported action");
@@ -132,13 +142,13 @@ public class gertec extends CordovaPlugin {
         //String timeStamp = ppComp.PP_GetTimeStamp("00");
         String gcr_input = "0099" + valorTransacaoCentavos + dataAtualFormatada + horaAtualFormatada + "000000000000";*/
      
-     /*  cordovaInt.getActivity().runOnUiThread(new Runnable() {
+       cordovaInt.getActivity().runOnUiThread(new Runnable() {
         @Override
         public void run() {
             Intent intent = new Intent(cordova.getActivity(), MainActivity.class);
             cordovaInt.getActivity().startActivity(intent);
         }
-    });*/
+    });
 
 
     }
