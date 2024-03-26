@@ -236,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                t.setImageResource(R.drawable.check);
+         //       t.setImageResource(R.drawable.check);
             }
         });
     }
